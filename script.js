@@ -42,6 +42,33 @@ const span = document.createElement("span");
 
 buttons.addEventListener("click", event => {
     let target = event.target;
+    let newStorage = storage.join('').split(/([_\W])/);
+
+    function compute(array){
+        while (array.includes("*") == true) {
+            let x = array.indexOf("*");
+            console.log(x);
+            let multiplyResult = operator(parseInt(array[x-1]), parseInt(array[x+1]), array[x]);
+            console.log(multiplyResult);
+            array[x-1] = multiplyResult;
+            array.splice(x, 2);
+            console.log(array);
+        }
+        while (array.includes("/") == true) {
+            let y = array.indexOf("/");
+            console.log(y);
+            let divideResult = operator(parseInt(array[y-1]), parseInt(array[y+1]), array[y]);
+            console.log(divideResult);
+            array[y-1] = divideResult;
+            array.splice(y, 2);
+        }
+        while (array.length >= 3) {
+            let intermediateResult = operator(parseInt(array[0]), parseInt(array[2]), array[1]);
+            array[0] = intermediateResult;
+            array.splice(1,2);
+        }
+    }
+
     if (target.matches("button")) {
         let value = target.innerHTML;
         span.textContent += value;
@@ -50,12 +77,7 @@ buttons.addEventListener("click", event => {
         }
 
     if (target.matches("#equals")) {
-        let newStorage = storage.join('').split(/([_\W])/);
-        while (newStorage.length > 3) {
-            let intermediateResult = operator(parseInt(newStorage[0]), parseInt(newStorage[2]), newStorage[1]);
-            newStorage[0] = intermediateResult;
-            newStorage.splice(1,2);
-        }
+        compute(newStorage);
         span.textContent += newStorage[0];
         display.appendChild(span);
     }
