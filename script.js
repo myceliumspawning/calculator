@@ -78,7 +78,7 @@ buttons.addEventListener("click", event => {
             display.appendChild(span);
         } else {
         compute(newStorage);
-        span.textContent += newStorage[0];
+        span.textContent += Math.round(parseFloat(newStorage[0]) * 100) / 100;
         display.appendChild(span);
         }
     }
