@@ -15,12 +15,11 @@ function divide(a, b) {
     return a / b;
 }
 
-let num1 = "foo";
-let num2 = "bar";
-let op = 0;
 let storage = [];
 
 function operator(num1, num2, op) {
+    num1 = parseFloat(num1);
+    num2 = parseFloat(num2);
     if (op === "+") {
         return add(num1, num2);
     } else if (op === "-") {
@@ -42,26 +41,29 @@ const span = document.createElement("span");
 
 buttons.addEventListener("click", event => {
     let target = event.target;
-    let newStorage = storage.join('').split(/([_\W])/);
+    let newStorage = storage.join('').match(/(\d+(\.\d+)?|[+\-*/=])/g);
 
     function compute(array){
         while (array.includes("*") == true) {
             let x = array.indexOf("*");
-            let multiplyResult = operator(parseInt(array[x-1]), parseInt(array[x+1]), array[x]);
+            let multiplyResult = operator(array[x-1], array[x+1], array[x]);
             array[x-1] = multiplyResult;
             array.splice(x, 2);
+            console.log(newStorage);
         }
         while (array.includes("/") == true) {
             let y = array.indexOf("/");
-            let divideResult = operator(parseInt(array[y-1]), parseInt(array[y+1]), array[y]);
+            let divideResult = operator(array[y-1], array[y+1], array[y]);
             array[y-1] = divideResult;
             array.splice(y, 2);
         }
         while (array.length >= 3) {
-            let intermediateResult = operator(parseInt(array[0]), parseInt(array[2]), array[1]);
+            let intermediateResult = operator(array[0], array[2], array[1]);
             array[0] = intermediateResult;
             array.splice(1,2);
         }
+        span.textContent += Math.round(parseFloat(newStorage[0]) * 100) / 100;
+        display.appendChild(span);
     }
 
     if (target.matches("button")) {
@@ -73,12 +75,16 @@ buttons.addEventListener("click", event => {
 
     if (target.matches("#equals")) {
         if (newStorage.includes("*") == false && newStorage.includes("/") == false && newStorage.includes("+") == false && newStorage.includes("-") == false) {
-            span.textContent += newStorage[0];
-            display.appendChild(span);
+            compute(newStorage);
+        } else if (storage[0] == "-") {
+            newStorage = newStorage.slice(2);
+            newStorage[0] = -Math.abs(parseFloat(newStorage[0]));
+            compute(newStorage);
+        } else if (storage[0] == "+") {
+            newStorage = newStorage.slice(2);
+            compute(newStorage);
         } else {
-        compute(newStorage);
-        span.textContent += Math.round(parseFloat(newStorage[0]) * 100) / 100;
-        display.appendChild(span);
+            compute(newStorage);
         }
         storage = newStorage;
     }
@@ -87,6 +93,7 @@ buttons.addEventListener("click", event => {
         span.textContent = "";
         display.replaceChildren(span);
         storage = [];
+        newStorage = [];
     }
 })
 
