@@ -47,14 +47,16 @@ buttons.addEventListener("click", event => {
         span.textContent += value;
         display.appendChild(span);
         storage.push(value);
-        console.log(storage);
         }
 
     if (target.matches("#equals")) {
         let newStorage = storage.join('').split(/([_\W])/);
-        console.log(newStorage);
-        let result = operator(parseInt(newStorage[0]), parseInt(newStorage[2]), newStorage[1]);
-        span.textContent += result;
+        while (newStorage.length > 3) {
+            let intermediateResult = operator(parseInt(newStorage[0]), parseInt(newStorage[2]), newStorage[1]);
+            newStorage[0] = intermediateResult;
+            newStorage.splice(1,2);
+        }
+        span.textContent += newStorage[0];
         display.appendChild(span);
     }
 
@@ -62,7 +64,6 @@ buttons.addEventListener("click", event => {
         span.textContent = "";
         display.replaceChildren(span);
         storage = [];
-        console.log(storage);
     }
 })
 
