@@ -76,12 +76,12 @@ buttons.addEventListener("click", event => {
     if (target.matches("#equals")) {
         if (newStorage.includes("*") == false && newStorage.includes("/") == false && newStorage.includes("+") == false && newStorage.includes("-") == false) {
             compute(newStorage);
-        } else if (storage[0] == "-") {
-            newStorage = newStorage.slice(2);
-            newStorage[0] = -Math.abs(parseFloat(newStorage[0]));
+        } else if (newStorage[0] === "-" && !isNaN(newStorage[1])) {
+            newStorage[1] = "-" + newStorage[1];
+            newStorage.shift();
             compute(newStorage);
-        } else if (storage[0] == "+") {
-            newStorage = newStorage.slice(2);
+        } else if (newStorage[0] === "+" && !isNaN(newStorage[1])) {
+            newStorage.shift();
             compute(newStorage);
         } else {
             compute(newStorage);
