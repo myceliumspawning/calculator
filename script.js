@@ -73,7 +73,6 @@ buttons.addEventListener("click", event => {
 
     if (target.matches("#equals")) {
         if (newStorage.includes("*") == false && newStorage.includes("/") == false && newStorage.includes("+") == false && newStorage.includes("-") == false) {
-            console.log(newStorage);
             span.textContent += newStorage[0];
             display.appendChild(span);
         } else {
@@ -81,6 +80,7 @@ buttons.addEventListener("click", event => {
         span.textContent += Math.round(parseFloat(newStorage[0]) * 100) / 100;
         display.appendChild(span);
         }
+        storage = newStorage;
     }
         
     if (target.matches("#clear")) {
