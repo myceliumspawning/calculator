@@ -8,6 +8,8 @@
 body {
     display: flex;
     justify-content: center;
+    align-items: center;
+    height: 90vh;
 }
 
 div {
@@ -16,7 +18,12 @@ div {
     align-items: center;
     flex-direction: column;
     flex-wrap: wrap;
-    width: 370px;
+    width: 360px;
+}
+
+span {
+    display: block;
+    word-break: break-all;
 }
 
 button {
@@ -41,14 +48,16 @@ button:active {
 .calculator {
     background-color: #89616D;
     width: 400px;
-    height: 600px;
+    height: 620px;
+    border-radius: 5px;
 }
 
 .display {
     background-color: #E1BDC5;
     flex: 1;
+    border: 3px solid rgb(86, 79, 79);
     padding: 2px;
-    margin: 10px 4px 2px 4px;
+    margin: 10px 12px;
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-end;
@@ -56,5 +65,5 @@ button:active {
 }
 
 #clear {
-    width: 270px;
+    width: 260px;
 }
