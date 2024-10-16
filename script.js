@@ -75,6 +75,14 @@ buttons.addEventListener("click", event => {
         storage.push(value);
         }
 
+    if (target.matches("#point")) {
+        target.setAttribute('disabled', '');
+    }
+
+    if (target.matches("#add") || target.matches("#subtract") || target.matches("#multiply") || target.matches("#divide") || target.matches("#equals")) {
+        document.querySelector("#point").removeAttribute('disabled');
+    }
+
     if (target.matches("#equals")) {
         if (newStorage.includes("*") == false && newStorage.includes("/") == false && newStorage.includes("+") == false && newStorage.includes("-") == false) {
             compute(newStorage);
