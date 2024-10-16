@@ -44,24 +44,26 @@ buttons.addEventListener("click", event => {
     let newStorage = storage.join('').match(/(\d+(\.\d+)?|[+\-*/=])/g);
 
     function compute(array){
-        while (array.includes("*") == true) {
-            let x = array.indexOf("*");
-            let multiplyResult = operator(array[x-1], array[x+1], array[x]);
-            array[x-1] = multiplyResult;
-            array.splice(x, 2);
-            console.log(newStorage);
+
+        function getResult(string) {
+            while (array.includes(string) == true) {
+                let x = array.indexOf(string);
+                let result = operator(array[x-1], array[x+1], array[x]);
+                array[x-1] = result;
+                array.splice(x, 2);
+            }
         }
-        while (array.includes("/") == true) {
-            let y = array.indexOf("/");
-            let divideResult = operator(array[y-1], array[y+1], array[y]);
-            array[y-1] = divideResult;
-            array.splice(y, 2);
-        }
+
+        getResult("*");
+
+        getResult("/");
+
         while (array.length >= 3) {
             let intermediateResult = operator(array[0], array[2], array[1]);
             array[0] = intermediateResult;
             array.splice(1,2);
         }
+        
         span.textContent += Math.round(parseFloat(newStorage[0]) * 100) / 100;
         display.appendChild(span);
     }
