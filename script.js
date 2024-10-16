@@ -41,6 +41,7 @@ const span = document.createElement("span");
 
 buttons.addEventListener("click", event => {
     let target = event.target;
+    let value = target.innerHTML;
     let newStorage = storage.join('').match(/(\d+(\.\d+)?|[+\-*/=])/g);
 
     function compute(array){
@@ -68,8 +69,7 @@ buttons.addEventListener("click", event => {
         display.appendChild(span);
     }
 
-    if (target.matches("button")) {
-        let value = target.innerHTML;
+    if (target.matches("button") && !target.matches("#delete")) {
         span.textContent += value;
         display.appendChild(span);
         storage.push(value);
@@ -81,6 +81,13 @@ buttons.addEventListener("click", event => {
 
     if (target.matches("#add") || target.matches("#subtract") || target.matches("#multiply") || target.matches("#divide") || target.matches("#equals")) {
         document.querySelector("#point").removeAttribute('disabled');
+    }
+
+    if (target.matches("#delete")) {
+        let regex = new RegExp(storage[storage.length-1] + "$");
+        span.textContent = span.textContent.replace(regex, "");
+        storage.pop();
+        newStorage.pop();
     }
 
     if (target.matches("#equals")) {
